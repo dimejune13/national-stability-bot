@@ -14,6 +14,7 @@ load_dotenv(dotenv_path)
 
 TOKEN = os.environ.get("API_TOKEN")
 GROUP_CHAT_ID = os.environ.get("GROUP_CHAT_ID")
+REGISTERED_USERS = os.environ.get("REGISTERED_USERS")
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -21,6 +22,12 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
+# Utilities functions
+def is_registered_user(username):
+    for user in REGISTERED_USER.split(','):
+        if username == user:
+            return true
+    return false
 
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
@@ -29,12 +36,10 @@ def start(update, context):
     logger.info('UPDATER DICT: %s', update)
     update.message.reply_text('The Smiling General At your service')
 
-
 def help(update, context):
     """Send a message when the command /help is issued."""
     logger.info('UPDATER DICT: %s', update)
     update.message.reply_text('You don\'t get to ask for help')
-
 
 def echo(update, context):
     """Echo the user message."""
@@ -42,12 +47,15 @@ def echo(update, context):
 
 def send_to_a_group(update, context):
     logger.info('UPDATE DICT: %s\nCONTEXT DICT: %s', update, context)
-    context.bot.send_message(GROUP_CHAT_ID, text=update.message.text)
-    
+
+    if is_registered_user(update.message.from.username):
+        context.bot.send_message(GROUP_CHAT_ID, text=update.message.text)
+    else:
+        update.message.reply_text('You are not a registered user')
+
 def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
-
 
 def main():
     """Start the bot."""
@@ -77,7 +85,6 @@ def main():
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
     updater.idle()
-
 
 if __name__ == '__main__':
     logger.info("National Stability Bot Started!")
