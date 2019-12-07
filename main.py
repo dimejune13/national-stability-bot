@@ -24,10 +24,10 @@ logger = logging.getLogger(__name__)
 
 # Utilities functions
 def is_registered_user(username):
-    for user in REGISTERED_USER.split(','):
+    for user in REGISTERED_USERS.split(','):
         if username == user:
-            return true
-    return false
+            return True
+    return False
 
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
@@ -48,7 +48,7 @@ def echo(update, context):
 def send_to_a_group(update, context):
     logger.info('UPDATE DICT: %s\nCONTEXT DICT: %s', update, context)
 
-    if is_registered_user(update.message.from.username):
+    if is_registered_user(update['message']['from']['username']):
         context.bot.send_message(GROUP_CHAT_ID, text=update.message.text)
     else:
         update.message.reply_text('You are not a registered user')
