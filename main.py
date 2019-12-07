@@ -34,7 +34,7 @@ def is_registered_user(username):
 def start(update, context):
     """Send a message when the command /start is issued."""
     logger.info('GROUP NAME: %s\nGROUP ID: %s', update.effective_chat.title, update.effective_chat.id)
-    update.message.reply_text('The Smiling General At your service')
+    update.message.reply_text('The Admiral General Aladeen at your service. Death to the west.')
 
 def help(update, context):
     """Send a message when the command /help is issued."""
