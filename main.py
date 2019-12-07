@@ -13,7 +13,7 @@ dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
 TOKEN = os.environ.get("API_TOKEN")
-
+GROUP_CHAT_ID = os.environ.get("GROUP_CHAT_ID")
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -38,8 +38,9 @@ def echo(update, context):
     """Echo the user message."""
     update.message.reply_text(update.message.text)
 
-def send_to_a_group():
-    pass
+def send_to_a_group(update, context):
+    context.bot.send_message(GROUP_CHAT_ID, text=update.message.text)
+    
 
 def error(update, context):
     """Log Errors caused by Updates."""
@@ -52,7 +53,7 @@ def main():
     # Make sure to set use_context=True to use the new context based callbacks
     # Post version 12 this will no longer be necessary
     updater = Updater(TOKEN, use_context=True)
-
+    
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
@@ -61,7 +62,8 @@ def main():
     dp.add_handler(CommandHandler("help", help))
 
     # on noncommand i.e message - echo the message on Telegram
-    dp.add_handler(MessageHandler(Filters.text, echo))
+    # dp.add_handler(MessageHandler(Filters.text, echo))
+    dp.add_handler(MessageHanlder(Filters.text, send_to_a_group))
 
     # log all errors
     dp.add_error_handler(error)
