@@ -33,7 +33,7 @@ def is_registered_user(username):
 # context. Error handlers also receive the raised TelegramError object in error.
 def start(update, context):
     """Send a message when the command /start is issued."""
-    logger.info('UPDATER DICT: %s', update)
+    logger.info('GROUP NAME: %s\nGROUP ID: %s', update.effective_chat.title, update.effective_chat.id)
     update.message.reply_text('The Smiling General At your service')
 
 def help(update, context):
