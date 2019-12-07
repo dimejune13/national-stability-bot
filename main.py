@@ -39,6 +39,7 @@ def echo(update, context):
     update.message.reply_text(update.message.text)
 
 def send_to_a_group(update, context):
+    logger.info('UPDATE DICT: %s\nCONTEXT DICT: %s\n', update, context)
     context.bot.send_message(GROUP_CHAT_ID, text=update.message.text)
     
 
