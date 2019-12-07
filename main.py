@@ -46,9 +46,9 @@ def echo(update, context):
     update.message.reply_text(update.message.text)
 
 def send_to_a_group(update, context):
-    logger.info('UPDATE DICT: %s\nUPDATE TYPE: %s', update, type(update))
+    logger.info('UPDATE DICT: %s', update)
 
-    if is_registered_user(update['message']['from']['username']):
+    if is_registered_user(update.effective_user.username):
         context.bot.send_message(GROUP_CHAT_ID, text=update.message.text)
     else:
         update.message.reply_text('You are not a registered user')
