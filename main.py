@@ -17,7 +17,7 @@ GROUP_CHAT_ID = os.environ.get("GROUP_CHAT_ID")
 REGISTERED_USERS = os.environ.get("REGISTERED_USERS")
 
 # Enable logging
-logging.basicConfig(filename='logs', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+logging.basicConfig(filename='.logs', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
 logger = logging.getLogger(__name__)
