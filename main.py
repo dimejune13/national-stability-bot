@@ -26,11 +26,13 @@ logger = logging.getLogger(__name__)
 # context. Error handlers also receive the raised TelegramError object in error.
 def start(update, context):
     """Send a message when the command /start is issued."""
+    logger.info('UPDATER DICT: %s', update)
     update.message.reply_text('The Smiling General At your service')
 
 
 def help(update, context):
     """Send a message when the command /help is issued."""
+    logger.info('UPDATER DICT: %s', update)
     update.message.reply_text('You don\'t get to ask for help')
 
 
@@ -39,10 +41,9 @@ def echo(update, context):
     update.message.reply_text(update.message.text)
 
 def send_to_a_group(update, context):
-    logger.info('UPDATE DICT: %s\nCONTEXT DICT: %s\n', update, context)
+    logger.info('UPDATE DICT: %s\nCONTEXT DICT: %s', update, context)
     context.bot.send_message(GROUP_CHAT_ID, text=update.message.text)
     
-
 def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
